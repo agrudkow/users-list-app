@@ -40,8 +40,13 @@ class App extends React.Component {
         const dateMinutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
         const dateText = dateYear + '/' + dateMonth + '/' + dateDay + ' godz.: ' + dateHours + ':' + dateMinutes;
         this.setState( prevState => {
-            const updatedUsersList = prevState.users;
+            let updatedUsersList = prevState.users;
             updatedUsersList.push({email: emailData, nickname: nicknameData, ip: ipData, registrationDate: dateText});
+            updatedUsersList = this.state.sortType === 'asc' ? 
+                updatedUsersList.sort((userA, userB) => userA[this.state.sortColumn] > userB[this.state.sortColumn] ? 1 : -1) 
+                :
+                updatedUsersList.sort((userA, userB) => userA[this.state.sortColumn] < userB[this.state.sortColumn] ? 1 : -1) ;
+            
             return {
                 users: updatedUsersList
             }
@@ -66,7 +71,7 @@ class App extends React.Component {
             const updatedUsersList = updatedSortType === 'asc' ? 
                 users.sort((userA, userB) => userA[columnName] > userB[columnName] ? 1 : -1) 
                 :
-                users.sort((userA, userB) => userA[columnName] < userB[columnName] ? 1 : -1) 
+                users.sort((userA, userB) => userA[columnName] < userB[columnName] ? 1 : -1);
 
             return {
                 users: updatedUsersList,
