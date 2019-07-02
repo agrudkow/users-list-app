@@ -1,0 +1,17 @@
+.form-group {
+    /* position: absolute !important; */
+    margin: auto !important;
+}
+
+.border {
+    position: relative;
+    width: 50%;
+    margin: auto;
+    padding: 10px;
+}
+
+.btn:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+
+  }
