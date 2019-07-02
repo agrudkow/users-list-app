@@ -20,13 +20,13 @@ class UsersList extends React.Component {
                         <tr>
                             <th scope="col">
                                 Email 
-                                <button className='btn'>
+                                <button className='btn'  onClick={() => this.props.handleSortButtonClick('email')}>
                                     <FontAwesomeIcon icon={faSort} />
                                 </button>
                             </th>
                             <th scope="col">
                                 Nickname 
-                                <button className='btn'>
+                                <button className='btn'  onClick={() => this.props.handleSortButtonClick('nickname')}>
                                     <FontAwesomeIcon icon={faSort} />
                                 </button>
                             </th>
@@ -35,7 +35,7 @@ class UsersList extends React.Component {
                             </th>
                             <th scope="col">
                                 Registration date 
-                                <button className='btn'>
+                                <button className='btn' onClick={() => this.props.handleSortButtonClick('registrationDate')}>
                                     <FontAwesomeIcon icon={faSort} />
                                 </button>
                             </th>

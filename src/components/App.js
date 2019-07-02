@@ -7,16 +7,19 @@ class App extends React.Component {
     constructor () {
         super();
         this.state = {
-            users: []
+            users: [],
+            sortColumn: 'registrationDate', //Can be registrationDate, nickname, email
+            sortType: 'asc',    //Can asc- ascending. desc-descending
         };
 
         this.handleDeleteButtonClick = this.handleDeleteButtonClick.bind(this);
         this.handleAddUserButtonClick = this.handleAddUserButtonClick.bind(this);
         this.handleClearListButtonClick = this.handleClearListButtonClick.bind(this);
+        this.handleSortButtonClick = this.handleSortButtonClick.bind(this);
     }
 
     handleDeleteButtonClick (nickname) {
-        const isConfirmed = window.confirm(`Delete user ${nickname}`);
+        const isConfirmed = window.confirm(`Do you want to delete user with a nickname ${nickname}?\nRemember you cannot undo that oparation.`);
         if (isConfirmed) {
             this.setState(prevState => {
                 const updatedUsersList = prevState.users.filter(user => user.nickname !== nickname);
@@ -45,13 +48,34 @@ class App extends React.Component {
         })
     }
 
+
+
     handleClearListButtonClick () {
-        const isConfirmed = window.confirm('Delete entire list of users');
+        const isConfirmed = window.confirm('Do you want to delete entire list?\nRemember you cannot undo that oparation.');
         if (isConfirmed) {
             this.setState({
                 users: []
             })
         }
+    }
+
+    handleSortButtonClick(columnName) {
+        this.setState(prevState => {
+            const {sortColumn, sortType, users} = prevState;
+            const updatedSortType = (sortType === 'asc' && sortColumn === columnName) ? 'desc' : 'asc';
+            const updatedUsersList = updatedSortType === 'asc' ? 
+                users.sort((userA, userB) => userA[columnName] > userB[columnName] ? 1 : -1) 
+                :
+                users.sort((userA, userB) => userA[columnName] < userB[columnName] ? 1 : -1) 
+
+            return {
+                users: updatedUsersList,
+                sortColumn: columnName,
+                sortType: updatedSortType
+            }
+        });
+
+        
     }
 
     render() {
@@ -69,6 +93,7 @@ class App extends React.Component {
                     numOfUsers && <UsersList 
                                         data={this.state.users} 
                                         handleDeleteButtonClick={this.handleDeleteButtonClick}
+                                        handleSortButtonClick={this.handleSortButtonClick}
                                     />
                 }
             </div>
